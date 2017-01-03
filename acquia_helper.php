@@ -148,7 +148,7 @@ class AcquiaHelper {
 
   //https://cloudapi.acquia.com/v1/sites/realm:mysite/envs/dev/dbs/mysite/backups.json
   public function saveBackup($domain, $env, $sitegroup, $values) {
-    //print_r($values);
+
     $userpwd = $values['CLOUD_UUID'].":".$values['CLOUD_KEY'];
     $url ='https://cloudapi.acquia.com/v1/sites/prod:'.$sitegroup.'/envs/'.$values['CLOUD_REALM'].'/dbs/'.$sitegroup.'/backup.json';
 
@@ -182,9 +182,7 @@ class AcquiaHelper {
     		'env' => $env,
     		'domain' => $domain
     );
-    //'{+base_path}/sites/{site}/envs/{env}/domains/{domain}.json'
-
-
+  
     $result = $this->getCurlRequest($userpwd, $url, $delete, $variables);
 
     if ($data = json_decode($result, false)) {
@@ -282,68 +280,68 @@ class AcquiaHelper {
 	public function returnMappings() {
 		//try a direct mapping for odd side cases - exceptions
 		$dbmapping = array(
-        'drupal'						=>'ucsf_drupal',
-        'paetc'							=>'aids_education_training',
-        'policies'					=>'campus_policies',
-        'coi'								=>'conflict_of_interest',
-        'fhop'							=>'family_health_outcomes',
+        'drupal'=>'ucsf_drupal',
+        'paetc'=>'aids_education_training',
+        'policies'=>'campus_policies',
+        'coi'=>'conflict_of_interest',
+        'fhop'=>'family_health_outcomes',
         'familyhealthcenter'=>'FamilyHealthCenter',
         'finance.medschool'	=>'finance',
-        'hrp'								=>'human_resource_protection',
-        'mrc'								=>'multicultural_resource_center',
-        'postdocs'					=>'postdocs_ucsf_edu',
-        'rrp'								=>'research_resource_program',
-        'safemotherhood'		=>'safemotherhood.ucsf.edu',
-        'osr'								=>'sponsored_research',
-        'dentistry'					=>'school_dentistry',
-        'emergency'					=>'emergency_medicine',
-        'hub'								=>'clinicalhub',
-        'itgov'							=>'it_gov',
-        'kidscancertrials'	=>'kidscancer',
-        'rna.keck'					=>'keck',
-        'willedbodyprogram'	=>'willed_body',
-        'pharm'							=> 'parmsites',
-        'bts' 							=> 'bioengineering',
-        'www3'							=>'emergency',
-        'evcprovost'				=>'provost',
-        'livercenter'				=>'emergency',
-        'mccormicklab'			=>'mccormick',
-        'socpop'						=>'parc',
-        'ahi'								=>'ahi_ucsf_edu',
-        'bushlab'						=>'Bushlab',
-        'academicaffairs.medschool'	=>'academicaffairs',
-        'andino'						=>'andino_lab',
-        'addictionresearch'	=>'addiction_research',
-        'dc'	              =>'datacenter',
-        'depressioncenter'	=>'depression_center',
-        'digitalaccess'	    =>'awareness',
-        'knoxlab'	          =>'knoxlab',
-        'kleinlab'	        =>'kleinlab',
-        'itspconference'	  =>'itsp_conference',
-        'it-dmp'	          =>'itdmp',
-        'lanierlab'	        =>'lanier_lab',
-        'koliwadlab'	      =>'koliwad',
-        'qbcmaster'	        =>'qbc_master',
-        'odonovanlab'       =>'telolab',
+        'hrp'=>'human_resource_protection',
+        'mrc'=>'multicultural_resource_center',
+        'postdocs'=>'postdocs_ucsf_edu',
+        'rrp'=>'research_resource_program',
+        'safemotherhood'=>'safemotherhood.ucsf.edu',
+        'osr'=>'sponsored_research',
+        'dentistry'=>'school_dentistry',
+        'emergency'=>'emergency_medicine',
+        'hub'=>'clinicalhub',
+        'itgov'=>'it_gov',
+        'kidscancertrials'=>'kidscancer',
+        'rna.keck'=>'keck',
+        'willedbodyprogram'=>'willed_body',
+        'pharm'=> 'parmsites',
+        'bts'=> 'bioengineering',
+        'www3'=>'emergency',
+        'evcprovost'=>'provost',
+        'livercenter'=>'emergency',
+        'mccormicklab'=>'mccormick',
+        'socpop'=>'parc',
+        'ahi'=>'ahi_ucsf_edu',
+        'bushlab'=>'Bushlab',
+        'academicaffairs.medschool'=>'academicaffairs',
+        'andino'=>'andino_lab',
+        'addictionresearch'=>'addiction_research',
+        'dc'=>'datacenter',
+        'depressioncenter'=>'depression_center',
+        'digitalaccess'=>'awareness',
+        'knoxlab'=>'knoxlab',
+        'kleinlab'=>'kleinlab',
+        'itspconference'=>'itsp_conference',
+        'it-dmp'=>'itdmp',
+        'lanierlab'=>'lanier_lab',
+        'koliwadlab'=>'koliwad',
+        'qbcmaster'=>'qbc_master',
+        'odonovanlab'=>'telolab',
         'pdcenter.neurology'=>'pdcenter',
-        'odonovanlab'       =>'telolab',
-        'pharm'             =>'pharmsites',
+        'odonovanlab'=>'telolab',
+        'pharm'=>'pharmsites',
         'policies.medschool'=>'policies',
         'postdocs.medschool'=>'postdocs',
-        'prepare'           =>'preparepublic',
-        'sf4health.org'     =>'sf4health',
-        'meded'             =>'medical_education',
-        'studentaffairs'    =>'studentaffairs',
-        'qb3.org'           =>'qb3',
-        'archive.missionbayhospitals'	=>'missionbayhospitals',
-        'health-eyou'				=>'healtheyou',
-        'irb'								=>'human_research_protection',
-        'hrpp'							=>'human_research_protection',
+        'prepare'=>'preparepublic',
+        'sf4health.org'=>'sf4health',
+        'meded'=>'medical_education',
+        'studentaffairs'=>'studentaffairs',
+        'qb3.org'=>'qb3',
+        'archive.missionbayhospitals'=>'missionbayhospitals',
+        'health-eyou'=>'healtheyou',
+        'irb'=>'human_research_protection',
+        'hrpp'=>'human_research_protection',
         'surgery.dermatology'=>'dermsurgery',
-        'zsfganes'					=>'sfghanes',
-        'radiology-help'		=>'radiology_help',
+        'zsfganes'=>'sfghanes',
+        'radiology-help'=>'radiology_help',
         'radiology-internal'=>'radiology_internal',
-        'ciapm.org'					=>'ciapm_org'
+        'ciapm.org'=>'ciapm_org'
 		);
 
 		return $dbmapping;
@@ -416,17 +414,7 @@ class AcquiaHelper {
 	}
 
 
-  /* Database response from Acquia
-   stdClass Object
-   (
-	   [name] => ucsf_drupal
-	   [instance_name] => ucsfpdb8950 -- database name
-	   [username] => ucsfp
-	   [password] => VyLvuwbJy3Xj4JV
-	   [host] => ded-961  -- this is the host locally, add port 3306
-	   [db_cluster] => 253
-   )
-   */
+  // Database response from Acquia
   public function getCurrentDB($sitename, $src, $dst) {
   	//we need the sitegroup for the correct database connection.
   	//this will change on the SHEILD environment from ucsfp probably to ucsfp1 or similar.
