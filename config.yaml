@@ -1,0 +1,82 @@
+#you must define replacement values that maybe used later in the yaml document
+#at the top of the document, otherwise it is likely those values will not get
+#properly replaced.
+HOME: "/home/ucsfp"
+#ACQUIA_STAGE: dev
+ACQUIA_SITEGROUP: 
+ACQUIA_SITEGROUP_DST: 
+MIGRATION_SITE_NAME: ""
+# Cloud API
+CLOUD_UUID: 
+CLOUD_KEY: 
+CLOUD_CREDS: "{{CLOUD_UUID}}:{{CLOUD_KEY}}"
+CLOUD_REALM: prod
+CLOUD_SUB: "{{CLOUD_REALM}}:{{ACQUIA_SITEGROUP}}"
+
+#placeholders these we will get from the acquia API
+SRC_DB_USER: ""
+SRC_DB_HOST: ""
+SRC_DB_NAME: ""
+SRC_DB_PASS: ""
+SRC_DB_SETTING_NAME: ""
+SRC_EXPORT_DIR: "/mnt/tmp/{{ACQUIA_SITEGROUP}}/export"
+
+SRC_DB_SKIP_DATA: "^(cache|cache_.*|flood|semaphore|sessions|watchdog)$"
+#these we will create using the acquia API, then set the environmental vars.
+DST_DB_USER: ""
+DST_DB_HOST: ""
+DST_DB_NAME: ""
+DST_DB_PASS: ""
+# ACQUIA_HOSTNAME: "ded-0000.prod.hosting.acquia.com"
+DST_TEMP: "/mnt/tmp/{{ACQUIA_SITEGROUP_DST}}"
+DST_FILES_PREFIX: "/mnt/gfs/{{ACQUIA_SITEGROUP_DST}}"
+DST_IMPORT_DIR: "/mnt/tmp/{{ACQUIA_SITEGROUP_DST}}/import"
+DST_DRUSH_URI:
+# Files Variables - both src and dst
+# going to come from php as dependent on sitepath sites/sitename.ucsf.com/files
+#
+# Connecting Remote to Acquia
+SSH_KEY: "{{HOME}}/.ssh/acquia.key"
+SSH_CONFIG: "{{HOME}}/.ssh/config"
+# RSH_OPT="--rsh=ssh"
+RSH_OPT: "--rsh=ssh -F {{SSH_CONFIG}}"
+MIGRATION_DRY_RUN: 0
+MIGRATION_CFG: 1
+#ONLY GOING TO MIRGATE FROM PRODS
+ENVIRONMENTS:
+    PROD:
+        HOST: web-00000.prod.hosting.acquia.com
+        SSH_LOGIN:
+        DIRECTORY: "/mnt/gfs/{{ACQUIA_SITEGROUP_DST}}"
+        SSH_CMD: "ssh -A {{SSH_LOGIN}}@{{HOST}}"
+        ENV: prod
+    TEST:
+        HOST: staging-00000.prod.hosting.acquia.com
+        SSH_LOGIN:
+        DIRECTORY: "/mnt/gfs/{{ACQUIA_SITEGROUP_DST}}"
+        SSH_CMD: "ssh -A {{SSH_LOGIN}}@{{HOST}}"
+        ENV: test
+    DEV:
+        HOST: staging-00000.prod.hosting.acquia.com
+        SSH_LOGIN:
+        DIRECTORY: "/mnt/gfs/{{ACQUIA_SITEGROUP_DST}}"
+        SSH_CMD: "ssh -A {{SSH_LOGIN}}@{{HOST}}"
+        ENV: dev
+    OLDPROD:
+        HOST: web-0000.prod.hosting.acquia.com
+        SSH_LOGIN:
+        DIRECTORY: "/mnt/gfs/{{ACQUIA_SITEGROUP}}"
+        SSH_CMD: "ssh -A {{SSH_LOGIN}}@{{HOST}}"
+        ENV: prod
+    OLDTEST:
+        HOST: staging-0000.prod.hosting.acquia.com
+        SSH_LOGIN:
+        DIRECTORY: "/mnt/gfs/{{ACQUIA_SITEGROUP}}"
+        SSH_CMD: "ssh -A {{SSH_LOGIN}}@{{HOST}}"
+        ENV: test
+    OLDDEV:
+        HOST: staging-0000.prod.hosting.acquia.com
+        SSH_LOGIN:
+        DIRECTORY: "/mnt/gfs/{{ACQUIA_SITEGROUP}}"
+        SSH_CMD: "ssh -A {{SSH_LOGIN}}@{{HOST}}"
+        ENV: dev

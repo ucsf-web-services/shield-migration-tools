@@ -1,0 +1,9 @@
+{
+    "require": {
+        "monolog/monolog": "^1.17",
+        "symfony/yaml": "^3.0",
+        "wp-cli/php-cli-tools": "^0.11.0",
+        "mnapoli/silly": "^1.1",
+        "php-di/invoker": "^1.0"
+    }
+}
